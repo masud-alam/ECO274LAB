@@ -68,7 +68,7 @@ p4
 
 
 library("cowplot")
-plot_grid(p1,p2,p3, p4 + rremove("x.text"), 
+plot_grid(p1,p2,p3, p4, 
           labels = c("A", "B", "C", "D"),
           ncol = 2, nrow = 2)
 
