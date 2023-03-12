@@ -34,3 +34,43 @@ ggplot(data = gdp_data, aes(x = year, y = gdp_growth)) +
   ylab("GDP Growth (%)")+
   theme_bw()
 
+
+
+
+
+
+### Arranging four plots in one space to compare the macroeconomic performance
+
+require(WDI)
+WDIsearch('gdp')
+WDIsearch('gdp.*capita.*constant')
+dat = WDI(indicator= c('NY.GDP.PCAP.KD',"MS.MIL.XPND.GD.ZS"), country=c('MX','JP'), start=1970, end=2000)
+
+library(ggplot2)
+p1 <- ggplot(dat, aes(year, NY.GDP.PCAP.KD, color=country)) + geom_line() + 
+  xlab('Year') + ylab('GDP per capita')
+p1
+p2 <- ggplot(dat, aes(year, MS.MIL.XPND.GD.ZS, color=country)) + geom_line() + 
+  xlab('Year') + ylab('Military expenditure (% of GDP)')
+p2
+
+
+dat1 = WDI(indicator= c('NY.GDP.PCAP.KD',"MS.MIL.XPND.GD.ZS"), country=c('PK', 'IN'), start=1970, end=2000)
+
+
+p3 <- ggplot(dat1, aes(year, NY.GDP.PCAP.KD, color=country)) + geom_line() + 
+  xlab('Year') + ylab('GDP per capita')
+p3
+p4 <- ggplot(dat1, aes(year, MS.MIL.XPND.GD.ZS, color=country)) + geom_line() + 
+  xlab('Year') + ylab('Military expenditure (% of GDP)')
+p4
+
+
+
+library("cowplot")
+plot_grid(p1,p2,p3, p4 + rremove("x.text"), 
+          labels = c("A", "B", "C", "D"),
+          ncol = 2, nrow = 2)
+
+
+
